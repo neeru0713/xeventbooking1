@@ -47,8 +47,28 @@ function normalizeEvent(event, state, city, index) {
     address: event.Address ?? event.address ?? 'Address not available',
     city: event.City ?? event.city ?? city,
     state: event.State ?? event.state ?? state,
-    rating: event['Overall Rating'] ?? event.rating ?? 0,
+    rating: event['Overall Rating'] ?? event.overallRating ?? event.rating ?? 0,
   }
+}
+
+function extractEvents(payload) {
+  if (Array.isArray(payload)) {
+    return payload
+  }
+
+  if (Array.isArray(payload?.events)) {
+    return payload.events
+  }
+
+  if (Array.isArray(payload?.data)) {
+    return payload.data
+  }
+
+  if (Array.isArray(payload?.results)) {
+    return payload.results
+  }
+
+  return []
 }
 
 function Dropdown({
@@ -468,7 +488,7 @@ function App() {
         `${API_BASE_URL}/events?state=${encodeURIComponent(selectedState)}&city=${encodeURIComponent(selectedCity)}`,
       )
       const data = await response.json()
-      const normalizedEvents = (Array.isArray(data) ? data : []).map((item, index) =>
+      const normalizedEvents = extractEvents(data).map((item, index) =>
         normalizeEvent(item, selectedState, selectedCity, index),
       )
       setEvents(normalizedEvents)
