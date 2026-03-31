@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 // ---------------- HOME PAGE ----------------
@@ -65,7 +65,16 @@ function Home() {
       <Link to="/my-bookings">My Bookings</Link>
 
       {/* STATE DROPDOWN */}
-      <div id="state">
+      <div
+        id="state"
+        style={{
+          border: "1px solid black",
+          minHeight: "40px",
+          padding: "8px",
+          margin: "10px 0",
+        }}
+      >
+        {states.length === 0 && <p>Select State</p>}
         <ul>
           {states.map((s, i) => (
             <li key={i} onClick={() => setSelectedState(s)}>
@@ -76,7 +85,16 @@ function Home() {
       </div>
 
       {/* CITY DROPDOWN */}
-      <div id="city">
+      <div
+        id="city"
+        style={{
+          border: "1px solid black",
+          minHeight: "40px",
+          padding: "8px",
+          margin: "10px 0",
+        }}
+      >
+        {cities.length === 0 && <p>Select City</p>}
         <ul>
           {cities.map((c, i) => (
             <li key={i} onClick={() => setSelectedCity(c)}>
