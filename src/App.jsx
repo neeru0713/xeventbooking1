@@ -181,7 +181,7 @@ function HomePage({
             placeholder="Select a city"
             options={cityOptions}
             value={selectedCity}
-            disabled={!selectedState || loading.cities}
+            disabled={!selectedState || (loading.cities && cityOptions.length === 0)}
             isOpen={openDropdown === 'city'}
             onToggle={() => onToggleDropdown(openDropdown === 'city' ? null : 'city')}
             onSelect={onCitySelect}
@@ -419,7 +419,7 @@ function App() {
   async function handleStateSelect(state) {
     setSelectedState(state)
     setSelectedCity('')
-    setCityOptions([])
+    setCityOptions(FALLBACK_CITIES[state] ?? [])
     setEvents([])
     setHasSearched(false)
     setActiveBookingId(null)
